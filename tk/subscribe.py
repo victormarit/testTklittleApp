@@ -4,7 +4,6 @@ import tk.connection
 import classes.db
 import classes.user
 import fonctions.fonctionsTk
-import hashlib
 import re
 
 class Subscribe :

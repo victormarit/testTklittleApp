@@ -1,9 +1,9 @@
 import tkinter
 from tkinter import messagebox
+from fonctions.fonctionsTk import hashPassword
 import tk.subscribe
 import fonctions.fonctionsTk
 import classes.db
-import hashlib
 import classes.user
 
 class FrameConnection :
@@ -33,8 +33,7 @@ class FrameConnection :
 
     def connexion(self):
         if(self.idEntry.get() != '' and self.mpEntry.get() != ''):
-            pw = hashlib.sha1(self.mpEntry.get().encode())
-            password = pw.hexdigest()
+            password = hashPassword(self.mpEntry.get())
             logs = (self.idEntry.get(), password)
             bdd = classes.db.DB()
             info = bdd.login(logs)
