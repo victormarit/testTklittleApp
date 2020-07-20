@@ -46,8 +46,7 @@ class Subscribe :
                 bdd = classes.db.DB()
                 test = bdd.testEmail(self.emailEntry.get())
                 if test :
-                    pw = hashlib.sha1(self.mpEntry.get().encode())
-                    password = pw.hexdigest()
+                    password = fonctions.fonctionsTk.hashPassword(self.mpEntry.get())
                     data = (self.lnEntry.get(), self.fnEntry.get(), self.emailEntry.get(), password)
                     connection = (self.emailEntry.get(), password)
                     bdd.subscribe(data)
