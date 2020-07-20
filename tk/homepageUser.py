@@ -16,7 +16,7 @@ class HomepageUser:
 
         #Widget treeview
         self.tree = ttk.Treeview(self.frameHomepage)
-        self.tree.pack()
+        self.tree.pack(expand = 1 , fill= 'both')
 
         #treeview_console
         self.console = self.tree.insert('', 0, text='Consoles')
