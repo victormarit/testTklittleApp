@@ -19,7 +19,7 @@ class HomepageAdmin :
         self.tree.pack()
 
         #treeview_console
-        self.console = self.tree.insert('', 0, text='Console')
+        self.console = self.tree.insert('', 0, text='Console', image = self.logo)
         self.tree.insert(self.console, 0, 'item1',text='Ajouter une console', image = self.logo)
         self.tree.insert(self.console, 1, text='Supprimer une console', image = self.logo)
 
