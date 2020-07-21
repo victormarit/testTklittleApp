@@ -2,7 +2,7 @@ import tkinter
 from tkinter import messagebox
 from fonctions.fonctionsTk import hashPassword
 import tk.subscribe
-import fonctions.fonctionsTk
+import tk.menu
 import classes.db
 import classes.user
 
@@ -45,6 +45,6 @@ class FrameConnection :
                 messagebox.showinfo("Connexion",'Connexion Réussie')
                 utilisateur = classes.user.User(info)
                 self.frameConnection.destroy()
-                fonctions.fonctionsTk.adminOrClient(f1, utilisateur)
+                tk.menu.MenuTK(f1, utilisateur)
         else : 
             messagebox.showinfo('Erreur', 'Veuillez remplir tous les champs')

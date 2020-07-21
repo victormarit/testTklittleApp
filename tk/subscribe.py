@@ -3,7 +3,7 @@ from tkinter import messagebox
 import tk.connection
 import classes.db
 import classes.user
-import fonctions.fonctionsTk
+import tk.menu
 import re
 
 class Subscribe :
@@ -52,7 +52,7 @@ class Subscribe :
                     info = bdd.login(connection)
                     utilisateur = classes.user.User(info)
                     self.mainFrame.destroy()
-                    fonctions.fonctionsTk.adminOrClient(f1, utilisateur)
+                    tk.menu.MenuTK(f1, utilisateur)
                 elif test == False :
                     messagebox.showinfo("Erreur", "Cette adresse email est déjà utilisée") 
                 else : 

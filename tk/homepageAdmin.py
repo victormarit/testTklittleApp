@@ -9,24 +9,23 @@ class HomepageAdmin :
         global f1
         f1 = fenetre
         #frameHomepage
-        self.frameHomepage = tkinter.Frame(fenetre.window)
+        self.frameHomepage = tkinter.Frame(fenetre.window, bg = 'white')
         self.frameHomepage.pack(side = 'left', fill ='y')
+        #
+        self.labelWelcome = tkinter.Label(self.frameHomepage, text = 'Pannel Administratif', bg = 'white')
+        self.labelWelcome.pack(padx = 20)
         #logoConsole
         self.logo = PhotoImage(file = 'img/logo/logoManette.gif').subsample(10, 10)
-
         #Widget treeview
         self.tree = ttk.Treeview(self.frameHomepage)
         self.tree.pack(expand = 1 , fill= 'both')
-
         #treeview_console
         self.console = self.tree.insert('', 0, text='Console', image = self.logo)
         self.tree.insert(self.console, 0, 'item1',text='Ajouter une console', image = self.logo)
         self.tree.insert(self.console, 1, text='Supprimer une console', image = self.logo)
-
         #treeview_genre
         self.genre = self.tree.insert('', 1, text='Genre')
         self.tree.insert(self.genre, 0, text='Ajouter un genre')
-
         #find tree
         self.tree.bind("<Double-1>", self.onDoubleClick)
 
