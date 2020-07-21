@@ -4,6 +4,11 @@ from tkinter import ttk
 import tkinter
 from tkinter import PhotoImage
 
+from tk.homepageAdminChoices.seeConsole import SeeConsole
+from tk.homepageAdminChoices.addConsole import AddConsole
+from tk.homepageAdminChoices.seeGenre import SeeGenre
+from tk.homepageAdminChoices.addGenre import AddGenre
+
 class HomepageAdmin :
     def __init__(self, fenetre, user):
         global f1
@@ -11,7 +16,7 @@ class HomepageAdmin :
         #frameHomepage
         self.frameHomepage = tkinter.Frame(fenetre.window, bg = 'white')
         self.frameHomepage.pack(side = 'left', fill ='y')
-        #
+        #Label pannel admin
         self.labelWelcome = tkinter.Label(self.frameHomepage, text = 'Pannel Administratif', bg = 'white')
         self.labelWelcome.pack(padx = 20)
         #logoConsole
@@ -26,18 +31,38 @@ class HomepageAdmin :
         #treeview_genre
         self.genre = self.tree.insert('', 1, text='Genre')
         self.tree.insert(self.genre, 0, text='Ajouter un genre')
+        self.tree.insert(self.genre, 1, text='Supprimer un genre')
         #find tree
         self.tree.bind("<Double-1>", self.onDoubleClick)
-
         #frameCanva
-
         self.frame1 = tkinter.Frame(fenetre.window, bg ='grey50')
         self.frame1.pack(side = 'left', expand = 1, fill='both')
-        self.canva = tkinter.Canvas(self.frame1, bg ='yellow')
-        self.canva.pack(fill = 'both', expand = 1, pady = 2, padx = 2)
 
     def onDoubleClick(self, event):
         item = self.tree.identify('item',event.x,event.y)
-        print("you clicked on", self.tree.item(item, 'text'))
-        if self.tree.item(item, 'text') == 'Ajouter une console':
-            self.canva.config(bg = 'red')
+        if self.tree.item(item, 'text') == 'Console' :
+            self.testFrame1_destroyChildren()
+            SeeConsole(self.frame1)
+        elif self.tree.item(item, 'text') == 'Ajouter une console': 
+            self.testFrame1_destroyChildren()
+            AddConsole(self.frame1)
+        elif self.tree.item(item, 'text') == 'Supprimer une console':
+            self.testFrame1_destroyChildren()
+        elif self.tree.item(item, 'text') == 'Genre':
+            self.testFrame1_destroyChildren()
+            SeeGenre(self.frame1)
+        elif self.tree.item(item, 'text') == 'Ajouter un genre':
+            self.testFrame1_destroyChildren()
+            AddGenre(self.frame1)
+        elif self.tree.item(item, 'text') == 'Supprimer un genre':
+            self.testFrame1_destroyChildren()
+        
+    def testFrame1_destroyChildren(self):
+        """
+        Will destroy all the children of self.frame1
+        No parameters, no return
+        """
+        test = self.frame1.winfo_children()
+        for i in test :
+            i.destroy()
+
