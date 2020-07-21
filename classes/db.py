@@ -100,6 +100,25 @@ class DB :
             except:
                 return
     
+    def findGenre(self, info):
+        req = 'SELECT * FROM genre WHERE genre.nomGenre = %s'
+        try :
+            self.connectionBD()
+            self.cursor.execute(req, info)
+            data = self.cursor.fetchone()
+        except :
+            print('Fail to find Genre') 
+        finally:
+            try:
+                if self.conn.is_connected():
+                    self.conn.close()
+                    if data is None :
+                        return []
+                    else :
+                        return data
+            except:
+                return
+    
     def addNewGenre(self, info):
         req = 'INSERT INTO genre (nomGenre) VALUES(%s);'
         try:

@@ -8,6 +8,7 @@ class TestDB(unittest.TestCase):
         self.dbTest = DB()
         self.infosUser = ('fakeUser', 'fakeName', 'fakeEmail@fake.com', 'adminadmin')
         self.logUser = ('fakeEmail@fake.com', 'adminadmin')
+        self.genre = ('testGenre',)
 
     def test_DB_DbIsInstance(self):
         self.assertIsInstance(self.dbTest, DB)
@@ -50,6 +51,17 @@ class TestDB(unittest.TestCase):
     def test_findGenres(self):
         data = self.dbTest.findGenres()
         self.assertTrue(len(data)>=0)
+    
+    def test_createGenre_deleteGenre(self):
+        #Create and test genre
+        self.dbTest.addNewGenre(self.genre)
+        data = self.dbTest.findGenre(self.genre)
+        self.assertEqual(len(data), 2)
+        #delete and test genre
+        self.dbTest.deleteOldGenre(self.genre)
+        data = self.dbTest.findGenre(self.genre)
+        self.assertEqual(len(data), 0)
+
 
 
 if __name__ == '__main__' : 
