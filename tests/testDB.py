@@ -47,6 +47,10 @@ class TestDB(unittest.TestCase):
         data = self.dbTest.login(self.logUser)
         self.assertEqual(len(data), 0)
 
+    def test_findGenres(self):
+        data = self.dbTest.findGenres()
+        self.assertTrue(len(data)>=0)
+
 
 if __name__ == '__main__' : 
     unittest.main()

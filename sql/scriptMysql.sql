@@ -12,13 +12,52 @@ CREATE TABLE user
     email VARCHAR(50) NOT NULL,
     pw VARCHAR(50) NOT NULL,
     admin BOOLEAN NOT NULL DEFAULT FALSE
-);
+) ENGINE=InnoDB ;
 
-CREATE TABLE Console(
+CREATE TABLE genre(
+   idGenre INT PRIMARY KEY AUTO_INCREMENT,
+   nomGenre VARCHAR(50) NOT NULL UNIQUE
+) ENGINE=InnoDB;
+
+
+CREATE TABLE console(
    idConsole INT PRIMARY KEY AUTO_INCREMENT,
    Nom VARCHAR(50) NOT NULL UNIQUE,
    Constructeur VARCHAR(50) NOT NULL
-);
+) ENGINE=InnoDB;
+
+CREATE TABLE possessionConsole(
+    idUser INT,
+    idConsole INT,
+    nb INT NOT NULL,
+    PRIMARY KEY (idUser, idConsole),
+    FOREIGN KEY(idUser) REFERENCES user(idUser),
+    FOREIGN KEY(idConsole) REFERENCES console(idConsole)
+
+) ENGINE=InnoDB;
+
+CREATE TABLE jeu(
+   idJeu INT PRIMARY KEY AUTO_INCREMENT,
+   Nom VARCHAR(50) NOT NULL,
+   pegi INT,
+   idGenre INT NOT NULL,
+   FOREIGN KEY(idGenre) REFERENCES Genre(idGenre)
+)ENGINE=InnoDB;
+
+CREATE TABLE possessionJeu(
+   idUser INT,
+   idConsole INT,
+   idJeu INT,
+   nb INT,
+   PRIMARY KEY(idUser, idConsole, idJeu),
+   FOREIGN KEY(idUser) REFERENCES user(idUser),
+   FOREIGN KEY(idConsole) REFERENCES Console(idConsole),
+   FOREIGN KEY(idJeu) REFERENCES jeu(idJeu)
+)ENGINE=InnoDB;
+
+
+
+
 
 
 ---Insertion de valeurs---

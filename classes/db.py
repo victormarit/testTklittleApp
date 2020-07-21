@@ -8,7 +8,6 @@ class DB :
     def connectionBD(self) :
         try : 
             self.conn = mysql.connector.connect(host = 'localhost', database = 'testcollecdb1', user = 'root', password = '', port = '3308')
-            print('Connexion Réussie')
             self.cursor = self.conn.cursor()
         except mysql.connector.Error as err: 
             print(err)
@@ -81,3 +80,53 @@ class DB :
                     self.conn.close()
             except:
                 pass
+
+    def findGenres(self):
+        req = 'SELECT * FROM genre'
+        try :
+            self.connectionBD()
+            self.cursor.execute(req)
+            data = self.cursor.fetchall()
+        except :
+            print('Fail to find Genre') 
+        finally:
+            try:
+                if self.conn.is_connected():
+                    self.conn.close()
+                    if data is None :
+                        return []
+                    else :
+                        return data
+            except:
+                return
+    
+    def addNewGenre(self, info):
+        req = 'INSERT INTO genre (nomGenre) VALUES(%s);'
+        try:
+            self.connectionBD()
+            self.cursor.execute(req, info)
+            self.conn.commit()
+        except:
+            print('\n\n\nEchec de l\'ajout du genre')
+        finally:
+            try:
+                if self.conn.is_connected():
+                    self.conn.close()
+            except:
+                pass
+
+    def deleteOldGenre(self, info):
+        req = 'DELETE FROM genre WHERE genre.nomGenre = %s;'
+        try :
+            self.connectionBD()
+            self.cursor.execute(req, info)
+            self.conn.commit()
+        except :
+            print('Fail to delete genre') 
+        finally:
+            try:
+                if self.conn.is_connected():
+                    self.conn.close()
+            except:
+                pass
+        
