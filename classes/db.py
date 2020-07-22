@@ -171,6 +171,24 @@ class DB :
             except:
                 return
 
+    def findConsole(self, info):
+        req = 'SELECT * FROM console WHERE console.Nom = %s AND console.Constructeur = %s AND console.logo = %s AND console.annee = %s'
+        try :
+            self.connectionBD()
+            self.cursor.execute(req, info)
+            data = self.cursor.fetchone()
+        except :
+            print('Fail to find Console') 
+        finally:
+            try:
+                if self.conn.is_connected():
+                    self.conn.close()
+                    if data is None :
+                        return []
+                    else :
+                        return data
+            except:
+                return
     def addNewConsole(self, info):
         req = 'INSERT INTO console (Nom, Constructeur, logo, annee) VALUES(%s, %s, %s, %s);'
         try:

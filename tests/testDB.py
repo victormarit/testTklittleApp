@@ -9,6 +9,7 @@ class TestDB(unittest.TestCase):
         self.infosUser = ('fakeUser', 'fakeName', 'fakeEmail@fake.com', 'adminadmin')
         self.logUser = ('fakeEmail@fake.com', 'adminadmin')
         self.genre = ('testGenre',)
+        self.console = ('testConsole', 'fakeConstructeur', 'fakePathForLogo', '2020')
 
     def test_DB_DbIsInstance(self):
         self.assertIsInstance(self.dbTest, DB)
@@ -61,6 +62,19 @@ class TestDB(unittest.TestCase):
         self.dbTest.deleteOldGenre(self.genre)
         data = self.dbTest.findGenre(self.genre)
         self.assertEqual(len(data), 0)
+
+    def test_createConsole_deleteConsole(self):
+        info = (self.console[0],)
+        #Create console and find console on DB
+        self.dbTest.addNewConsole(self.console)
+        data = self.dbTest.findConsole(self.console)
+        self.assertEqual(len(data), 5)
+        #Delete Console and try to find result on DB
+        self.dbTest.deleteOldConsole(info)
+        data = self.dbTest.findConsole(self.console)
+        self.assertEqual(len(data), 0)
+
+
 
 
 
