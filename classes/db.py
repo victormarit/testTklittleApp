@@ -172,7 +172,7 @@ class DB :
                 return
 
     def findConsole(self, info):
-        req = 'SELECT * FROM console WHERE console.Nom = %s AND console.Constructeur = %s AND console.logo = %s AND console.annee = %s'
+        req = 'SELECT * FROM console WHERE console.Nom = %s'
         try :
             self.connectionBD()
             self.cursor.execute(req, info)

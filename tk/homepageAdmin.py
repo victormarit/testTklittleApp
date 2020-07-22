@@ -6,6 +6,7 @@ from tkinter import PhotoImage
 
 from tk.homepageAdminChoices.seeConsole import SeeConsole
 from tk.homepageAdminChoices.addConsole import AddConsole
+from tk.homepageAdminChoices.alterConsole import AlterConsole
 from tk.homepageAdminChoices.delConsole import DelConsole
 from tk.homepageAdminChoices.seeGenre import SeeGenre
 from tk.homepageAdminChoices.addGenre import AddGenre
@@ -29,12 +30,14 @@ class HomepageAdmin :
         self.tree.pack(expand = 1 , fill= 'both')
         #treeview_console
         self.console = self.tree.insert('', 0, text='Console', image = self.logo)
-        self.tree.insert(self.console, 0, 'item1',text='Ajouter une console', image = self.logo)
-        self.tree.insert(self.console, 1, text='Supprimer une console', image = self.logo)
+        self.tree.insert(self.console, 0,text='Ajouter une console', image = self.logo)
+        self.tree.insert(self.console, 1,text='Modifier une console', image = self.logo)
+        self.tree.insert(self.console, 2, text='Supprimer une console', image = self.logo)
         #treeview_genre
         self.genre = self.tree.insert('', 1, text='Genre')
         self.tree.insert(self.genre, 0, text='Ajouter un genre')
-        self.tree.insert(self.genre, 1, text='Supprimer un genre')
+        self.tree.insert(self.genre, 1, text='Modifier un genre')
+        self.tree.insert(self.genre, 2, text='Supprimer un genre')
         #find tree
         self.tree.bind("<Double-1>", self.onDoubleClick)
         #frameCanva
@@ -49,6 +52,9 @@ class HomepageAdmin :
         elif self.tree.item(item, 'text') == 'Ajouter une console': 
             self.testFrame1_destroyChildren()
             AddConsole(self.frame1)
+        elif self.tree.item(item, 'text') == 'Modifier une console':
+            self.testFrame1_destroyChildren()
+            AlterConsole(self.frame1)
         elif self.tree.item(item, 'text') == 'Supprimer une console':
             self.testFrame1_destroyChildren()
             DelConsole(self.frame1)
@@ -58,6 +64,9 @@ class HomepageAdmin :
         elif self.tree.item(item, 'text') == 'Ajouter un genre':
             self.testFrame1_destroyChildren()
             AddGenre(self.frame1)
+        elif self.tree.item(item, 'text') == 'Modifier un genre':
+            self.testFrame1_destroyChildren()
+            #
         elif self.tree.item(item, 'text') == 'Supprimer un genre':
             self.testFrame1_destroyChildren()
             DelGenre(self.frame1)

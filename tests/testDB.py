@@ -67,11 +67,11 @@ class TestDB(unittest.TestCase):
         info = (self.console[0],)
         #Create console and find console on DB
         self.dbTest.addNewConsole(self.console)
-        data = self.dbTest.findConsole(self.console)
+        data = self.dbTest.findConsole(info)
         self.assertEqual(len(data), 5)
         #Delete Console and try to find result on DB
         self.dbTest.deleteOldConsole(info)
-        data = self.dbTest.findConsole(self.console)
+        data = self.dbTest.findConsole(info)
         self.assertEqual(len(data), 0)
 
 
