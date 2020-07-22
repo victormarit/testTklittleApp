@@ -3,6 +3,7 @@ from tkinter import messagebox
 import tk.connection
 import classes.db
 import classes.user
+import fonctions.fonctionsTk
 import tk.menu
 import re
 

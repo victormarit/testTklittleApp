@@ -9,19 +9,24 @@ class MenuTK:
         fenetre = f1
         self.frame = ''
         self.mainMenu=tkinter.Menu(f1.window)
-        #first choice
+        #first menu
         self.first_menu=tkinter.Menu(self.mainMenu, tearoff=0)
-        self.first_menu.add_command(label="Mon Compte")
         self.first_menu.add_command(label="Déconnexion", command = self.logOut)
         self.first_menu.add_separator()
         self.first_menu.add_command(label="Quitter",command=f1.window.quit)
-        #second choice 
+        #second menu 
         self.second_menu=tkinter.Menu(self.mainMenu, tearoff = 0)
-        self.second_menu.add_command(label="commande1")
-        self.second_menu.add_command(label="commande2")
-        self.second_menu.add_command(label="commande3")
-        self.mainMenu.add_cascade(label="Premier",menu=self.first_menu)
-        self.mainMenu.add_cascade(label="Second",menu=self.second_menu)
+        self.second_menu.add_command(label="Informations")
+        self.second_menu.add_command(label="Changer mot de passe")
+        self.second_menu.add_command(label="Supprimer mon compte")    
+        #third menu 
+        self.third_menu = tkinter.Menu(self.mainMenu, tearoff = 0)
+        self.third_menu.add_command(label = "Pannel administratif")
+        self.third_menu.add_command(label = "Voir ma collection")
+        #
+        self.mainMenu.add_cascade(label="Application",menu=self.first_menu)
+        self.mainMenu.add_cascade(label="Mon Compte",menu=self.second_menu)
+        self.addThirdMenu(utilisateur)
         f1.window.config(menu = self.mainMenu)
         self.userOrAdmin(utilisateur)
     
@@ -36,3 +41,7 @@ class MenuTK:
         self.frame.frameHomepage.destroy()
         self.frame.frame1.destroy()
         tk.connection.FrameConnection(fenetre)
+    
+    def addThirdMenu(self, user):
+        if user.admin : 
+            self.mainMenu.add_cascade(label = 'admin', menu= self.third_menu)
