@@ -23,7 +23,9 @@ CREATE TABLE genre(
 CREATE TABLE console(
    idConsole INT PRIMARY KEY AUTO_INCREMENT,
    Nom VARCHAR(50) NOT NULL UNIQUE,
-   Constructeur VARCHAR(50) NOT NULL
+   Constructeur VARCHAR(50) NOT NULL,
+   logo VARCHAR(50),
+   annee INT NOT NULL
 ) ENGINE=InnoDB;
 
 CREATE TABLE possessionConsole(

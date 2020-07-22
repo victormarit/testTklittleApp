@@ -6,9 +6,11 @@ from tkinter import PhotoImage
 
 from tk.homepageAdminChoices.seeConsole import SeeConsole
 from tk.homepageAdminChoices.addConsole import AddConsole
+from tk.homepageAdminChoices.delConsole import DelConsole
 from tk.homepageAdminChoices.seeGenre import SeeGenre
 from tk.homepageAdminChoices.addGenre import AddGenre
 from tk.homepageAdminChoices.delGenre import DelGenre
+
 
 class HomepageAdmin :
     def __init__(self, fenetre, user):
@@ -36,7 +38,7 @@ class HomepageAdmin :
         #find tree
         self.tree.bind("<Double-1>", self.onDoubleClick)
         #frameCanva
-        self.frame1 = tkinter.Frame(fenetre.window, bg ='grey50')
+        self.frame1 = tkinter.Frame(fenetre.window)
         self.frame1.pack(side = 'left', expand = 1, fill='both')
 
     def onDoubleClick(self, event):
@@ -49,6 +51,7 @@ class HomepageAdmin :
             AddConsole(self.frame1)
         elif self.tree.item(item, 'text') == 'Supprimer une console':
             self.testFrame1_destroyChildren()
+            DelConsole(self.frame1)
         elif self.tree.item(item, 'text') == 'Genre':
             self.testFrame1_destroyChildren()
             SeeGenre(self.frame1)

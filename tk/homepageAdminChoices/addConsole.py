@@ -1,11 +1,14 @@
 import tkinter
+from tkinter import messagebox
 from tk.homepageAdminChoices.seeConsole import SeeConsole
+from classes.db import DB
+
 
 class AddConsole:
     def __init__(self, frame):
         global mainFrame
         mainFrame = frame
-        self.frameApp = tkinter.Frame(frame, bg ='grey50')
+        self.frameApp = tkinter.Frame(frame)
         self.frameApp.pack()
         #
         self.labelWelcome = tkinter.Label(self.frameApp, text = 'Ajouter une console')
@@ -37,7 +40,7 @@ class AddConsole:
         self.labelVoid2 = tkinter.Label(self.frameApp, text = '')
         self.labelVoid2.grid(row = 6, column = 0)
         #valider
-        self.boutonValider = tkinter.Button(self.frameApp, text = 'Valider', width = 10)
+        self.boutonValider = tkinter.Button(self.frameApp, text = 'Valider', width = 10, command = self.valider)
         self.boutonValider.grid(row = 7, column = 0, columnspan = 2, pady= 5)
         #Annuler
         self.boutonAnnuler = tkinter.Button(self.frameApp, text = 'Annuler', width = 10, command = self.cancel)
@@ -46,3 +49,17 @@ class AddConsole:
     def cancel(self):
         self.frameApp.destroy()
         SeeConsole(mainFrame)
+    
+    def valider(self):
+        if self.nameEntry.get() != '' and self.constructeurEntry.get() != '' and self.anneeEntry.get() != '' : 
+            test = messagebox.askokcancel('Valider', 'Etes-vous sur de vouloir ajouter cette console ?')
+            if test : 
+                info = (self.nameEntry.get(), self.constructeurEntry.get(), self.logoEntry.get(), self.anneeEntry.get())
+                bd = DB() 
+                bd.addNewConsole(info)
+                self.frameApp.destroy()
+                SeeConsole(mainFrame)
+
+        else:
+            alert = messagebox.showinfo('Erreur', 'Veuillez remplir tous les champs')
+            alert.pack()

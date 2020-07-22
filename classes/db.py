@@ -12,6 +12,7 @@ class DB :
         except mysql.connector.Error as err: 
             print(err)
 
+#About User
     def login(self, log):
         req = 'SELECT * FROM user WHERE email = %s AND pw = %s'
         try : 
@@ -81,6 +82,7 @@ class DB :
             except:
                 pass
 
+#About Genre
     def findGenres(self):
         req = 'SELECT * FROM genre'
         try :
@@ -142,6 +144,56 @@ class DB :
             self.conn.commit()
         except :
             print('Fail to delete genre') 
+        finally:
+            try:
+                if self.conn.is_connected():
+                    self.conn.close()
+            except:
+                pass
+
+#About Console
+    def findConsoles(self):
+        req = 'SELECT * FROM console'
+        try :
+            self.connectionBD()
+            self.cursor.execute(req)
+            data = self.cursor.fetchall()
+        except :
+            print('Fail to find Console') 
+        finally:
+            try:
+                if self.conn.is_connected():
+                    self.conn.close()
+                    if data is None :
+                        return []
+                    else :
+                        return data
+            except:
+                return
+
+    def addNewConsole(self, info):
+        req = 'INSERT INTO console (Nom, Constructeur, logo, annee) VALUES(%s, %s, %s, %s);'
+        try:
+            self.connectionBD()
+            self.cursor.execute(req, info)
+            self.conn.commit()
+        except:
+            print('\n\n\nEchec de l\'ajout du genre')
+        finally:
+            try:
+                if self.conn.is_connected():
+                    self.conn.close()
+            except:
+                pass
+    
+    def deleteOldConsole(self, info):
+        req = 'DELETE FROM console WHERE console.Nom = %s;'
+        try :
+            self.connectionBD()
+            self.cursor.execute(req, info)
+            self.conn.commit()
+        except :
+            print('Fail to delete console') 
         finally:
             try:
                 if self.conn.is_connected():
