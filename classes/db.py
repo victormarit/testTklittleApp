@@ -67,6 +67,21 @@ class DB :
             except:
                 pass
 
+    def updateUser(self, info):
+        req = 'UPDATE user SET user.nom = %s, user.prenom = %s, user.email = %s WHERE user.idUser = %s'
+        try :
+            self.connectionBD()
+            self.cursor.execute(req, info)
+            self.conn.commit()
+        except :
+            print('Fail to delete user') 
+        finally:
+            try:
+                if self.conn.is_connected():
+                    self.conn.close()
+            except:
+                pass
+
     def deleteUser(self, info):
         req = 'DELETE FROM user WHERE user.nom = %s AND user.prenom = %s AND user.email = %s AND user.pw = %s'
         try :

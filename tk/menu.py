@@ -3,6 +3,8 @@ import tk.connection
 import tk.homepageAdmin
 import tk.homepageUser
 
+from tk.account.information import UserInformation
+
 class MenuTK:
     def __init__(self, f1, utilisateur):
         global fenetre
@@ -18,7 +20,7 @@ class MenuTK:
         self.first_menu.add_command(label="Quitter",command=f1.window.quit)
         #second menu 
         self.second_menu=tkinter.Menu(self.mainMenu, tearoff = 0)
-        self.second_menu.add_command(label="Informations")
+        self.second_menu.add_command(label="Informations", command = self.userInformation)
         self.second_menu.add_command(label="Changer mot de passe")
         self.second_menu.add_command(label="Supprimer mon compte")    
         #third menu 
@@ -61,5 +63,12 @@ class MenuTK:
             if i != self.mainMenu:
                 i.destroy()
         self.frame = tk.homepageUser.HomepageUser(fenetre, user)
+
+    def userInformation(self):
+        widget = self.frame.frame1.winfo_children()
+        for i in widget :
+            i.destroy()
+        UserInformation(user, self.frame.frame1)
+
 
         

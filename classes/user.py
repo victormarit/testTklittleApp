@@ -8,3 +8,7 @@ class User :
         self.admin = data[5]
         self.auth = True
         
+    def updateUserInformations(self, info):
+        self.nom = info[1]
+        self.prenom = info[0]
+        self.email = info[2]
