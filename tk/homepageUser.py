@@ -4,6 +4,8 @@ from tkinter import ttk
 import tkinter
 from tkinter import PhotoImage
 
+from tk.homepageUserChoices.seeConsole import SeeConsole
+
 class HomepageUser:
     def __init__(self, fenetre, user):
         global f1
@@ -43,8 +45,10 @@ class HomepageUser:
         item = self.tree.identify('item',event.x,event.y)
         if self.tree.item(item, 'text') == 'Voir Mes Consoles':
             self.testFrame1_destroyChildren()
+            SeeConsole(self.frame1)
         elif self.tree.item(item, 'text') == 'Consoles':
             self.testFrame1_destroyChildren()
+            SeeConsole(self.frame1)
         elif self.tree.item(item, 'text') == 'Ajouter une consoles':
             self.testFrame1_destroyChildren()
         elif self.tree.item(item, 'text') == 'Retirer une consoles':

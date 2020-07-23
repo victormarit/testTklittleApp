@@ -1,10 +1,12 @@
 import tkinter
+from tkinter import messagebox
 import tk.connection
 import tk.homepageAdmin
 import tk.homepageUser
 
 from tk.account.information import UserInformation
 from tk.account.updateUserPassword import UpdateUserPassword
+from tk.account.delAccount import DelAccount
 
 class MenuTK:
     def __init__(self, f1, utilisateur):
@@ -78,6 +80,8 @@ class MenuTK:
         UpdateUserPassword(user, self.frame.frame1)
 
     def userCloseAccount(self):
-        pass
-
+        widget = self.frame.frame1.winfo_children()
+        for i in widget :
+            i.destroy()
+        DelAccount(user, self.frame.frame1, self)
         
