@@ -204,6 +204,21 @@ class DB :
             except:
                 pass
     
+    def updateConsole(self, info):
+        req = 'UPDATE console SET console.Nom = %s, console.Constructeur = %s, console.logo = %s, console.annee = %s WHERE console.idConsole = %s'
+        try :
+            self.connectionBD()
+            self.cursor.execute(req, info)
+            self.conn.commit()
+        except :
+            print('Fail to update console') 
+        finally:
+            try:
+                if self.conn.is_connected():
+                    self.conn.close()
+            except:
+                pass
+            
     def deleteOldConsole(self, info):
         req = 'DELETE FROM console WHERE console.Nom = %s;'
         try :

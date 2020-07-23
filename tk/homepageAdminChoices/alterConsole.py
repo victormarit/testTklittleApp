@@ -15,6 +15,7 @@ class AlterConsole:
         self.voidLab = tkinter.Label(self.frameApp, text= '')
         self.voidLab.pack()
 
+        self.id = 0
         self.values = []
         self.getAllConsoles()
         self.box = ttk.Combobox(self.frameApp, values = self.values, state= 'readonly')
@@ -56,27 +57,30 @@ class AlterConsole:
         for console in data : 
             self.values.append(console[1])
 
-    def auto_completion(self, useless):
-        #add delete 
+    def delEntry(self):
         self.nameEntry.delete(first=0,last=1000)
         self.constructeurEntry.delete(first=0,last=1000)
         self.logoEntry.delete(first=0,last=1000)
         self.anneeEntry.delete(first=0,last=1000)
+
+    def auto_completion(self, useless):
+        self.delEntry()
         info = (self.box.get(),)
-        print(info)
         db = DB()
         data = db.findConsole(info)
         self.nameEntry.insert(1, data[1])
         self.constructeurEntry.insert(2, data[2])
         self.logoEntry.insert(4, data[3])
         self.anneeEntry.insert(3, data[4])
+        self.id = data[0]
     
     def valider(self):
         if self.nameEntry.get() != '' and self.constructeurEntry.get() != '' and self.anneeEntry.get() != '' and self.box.get() !='' : 
+            info = (self.nameEntry.get(), self.constructeurEntry.get(), self.logoEntry.get(), self.anneeEntry.get(), self.id)
             test = messagebox.askokcancel('Valider', 'Etes vous sur de vouloir modifier cette console')
             if test : 
-                #db = DB()
-                #db.alterConsole() #create fonction
+                db = DB()
+                db.updateConsole(info) #create fonction
                 self.frameApp.destroy()
                 SeeConsole(mainFrame)
         else : 

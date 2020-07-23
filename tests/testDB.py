@@ -69,9 +69,16 @@ class TestDB(unittest.TestCase):
         self.dbTest.addNewConsole(self.console)
         data = self.dbTest.findConsole(info)
         self.assertEqual(len(data), 5)
+        #updtate console 
+        consoleBis = ('testConsoleBis', 'fakeConstructeur', 'fakePathForLogo', '2020', data[0])
+        self.dbTest.updateConsole(consoleBis)
+        consoleThird = ('testConsoleBis',)
+        data = self.dbTest.findConsole(consoleThird)
+        print(data)
+        self.assertEqual(len(data[1]), 14)
         #Delete Console and try to find result on DB
-        self.dbTest.deleteOldConsole(info)
-        data = self.dbTest.findConsole(info)
+        self.dbTest.deleteOldConsole(consoleThird)
+        data = self.dbTest.findConsole(consoleThird)
         self.assertEqual(len(data), 0)
 
 
