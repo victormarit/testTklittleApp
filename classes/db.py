@@ -277,4 +277,38 @@ class DB :
                     self.conn.close()
             except:
                 pass
-        
+
+#Collection 
+    def userConsoleCollection(self, info):
+        req = 'SELECT * FROM possessionconsole where possessionconsole.idUser = %s'
+        try : 
+            self.connectionBD()
+            self.cursor.execute(req, info)
+            data = self.cursor.fetchall()
+        except : 
+            print('Pas de console trouvée')
+        finally:
+            try : 
+                if self.conn.is_connected():
+                    self.conn.close()
+                    if data is None :
+                        return []
+                    else :
+                        return data
+            except: 
+                return
+    
+    def insertConsoleUser(self, info):
+        req = 'INSERT INTO possessionconsole (idUser, idConsole) VALUES (%s, %s);'
+        try :
+            self.connectionBD()
+            self.cursor.execute(req, info)
+            self.conn.commit()
+        except :
+            print('Fail to delete console') 
+        finally:
+            try:
+                if self.conn.is_connected():
+                    self.conn.close()
+            except:
+                pass

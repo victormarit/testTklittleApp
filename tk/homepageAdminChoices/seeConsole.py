@@ -15,7 +15,6 @@ class SeeConsole:
         self.seeAllItem()
     
     def seeAllItem(self):
-        
         if self.data is None:
             messagebox.showinfo("Echec",'Connexion à la base de données perdue')
         elif len(self.data) == 0 : 

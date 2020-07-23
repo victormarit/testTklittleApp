@@ -5,14 +5,19 @@ import tkinter
 from tkinter import PhotoImage
 
 from tk.homepageUserChoices.seeConsole import SeeConsole
+from tk.homepageUserChoices.addConsole import AddConsole
 
 class HomepageUser:
     def __init__(self, fenetre, user):
         global f1
+        global utilisateur
+        utilisateur = user
         f1 = fenetre
         #frameHomepage
-        self.frameHomepage = tkinter.Frame(fenetre.window)
+        self.frameHomepage = tkinter.Frame(fenetre.window, bg = 'white')
         self.frameHomepage.pack(side = 'left', fill ='y')
+        self.labelWelcome = tkinter.Label(self.frameHomepage, text = 'Votre collection', bg = 'white')
+        self.labelWelcome.pack(padx = 20)
         #logoConsole
         self.logo = PhotoImage(file = 'img/logo/logoManette.gif').subsample(10, 10)
 
@@ -43,15 +48,17 @@ class HomepageUser:
 
     def onDoubleClick(self, event):
         item = self.tree.identify('item',event.x,event.y)
-        if self.tree.item(item, 'text') == 'Voir Mes Consoles':
+        if self.tree.item(item, 'text') == 'Voir mes consoles':
             self.testFrame1_destroyChildren()
-            SeeConsole(self.frame1)
+            SeeConsole(self.frame1, utilisateur)
         elif self.tree.item(item, 'text') == 'Consoles':
             self.testFrame1_destroyChildren()
-            SeeConsole(self.frame1)
-        elif self.tree.item(item, 'text') == 'Ajouter une consoles':
+            SeeConsole(self.frame1, utilisateur)
+        elif self.tree.item(item, 'text') == 'Ajouter une console':
             self.testFrame1_destroyChildren()
-        elif self.tree.item(item, 'text') == 'Retirer une consoles':
+            AddConsole(self.frame1, utilisateur)
+            
+        elif self.tree.item(item, 'text') == 'Retirer une console':
             self.testFrame1_destroyChildren()
 
         elif self.tree.item(item, 'text') == 'Jeux':
