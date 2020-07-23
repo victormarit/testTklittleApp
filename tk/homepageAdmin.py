@@ -10,6 +10,7 @@ from tk.homepageAdminChoices.alterConsole import AlterConsole
 from tk.homepageAdminChoices.delConsole import DelConsole
 from tk.homepageAdminChoices.seeGenre import SeeGenre
 from tk.homepageAdminChoices.addGenre import AddGenre
+from tk.homepageAdminChoices.alterGenre import AlterGenre
 from tk.homepageAdminChoices.delGenre import DelGenre
 
 
@@ -66,7 +67,7 @@ class HomepageAdmin :
             AddGenre(self.frame1)
         elif self.tree.item(item, 'text') == 'Modifier un genre':
             self.testFrame1_destroyChildren()
-            #
+            AlterGenre(self.frame1)
         elif self.tree.item(item, 'text') == 'Supprimer un genre':
             self.testFrame1_destroyChildren()
             DelGenre(self.frame1)

@@ -53,17 +53,23 @@ class TestDB(unittest.TestCase):
         data = self.dbTest.findGenres()
         self.assertTrue(len(data)>=0)
     
-    def test_createGenre_deleteGenre(self):
+    def test_createGenre_UpdateGenre_deleteGenre(self):
         #Create and test genre
         self.dbTest.addNewGenre(self.genre)
         data = self.dbTest.findGenre(self.genre)
         self.assertEqual(len(data), 2)
+        #Update genre 
+        genreBis = ('testGenreBis', data[0])
+        genreInfo = ('testGenreBis' , )
+        self.dbTest.updateGenre(genreBis)
+        data = self.dbTest.findGenre(genreInfo)
+        self.assertEqual(len(data[1]), 12)
         #delete and test genre
-        self.dbTest.deleteOldGenre(self.genre)
-        data = self.dbTest.findGenre(self.genre)
+        self.dbTest.deleteOldGenre(genreInfo)
+        data = self.dbTest.findGenre(genreInfo)
         self.assertEqual(len(data), 0)
 
-    def test_createConsole_deleteConsole(self):
+    def test_createConsole__updateConsole_deleteConsole(self):
         info = (self.console[0],)
         #Create console and find console on DB
         self.dbTest.addNewConsole(self.console)
@@ -74,7 +80,6 @@ class TestDB(unittest.TestCase):
         self.dbTest.updateConsole(consoleBis)
         consoleThird = ('testConsoleBis',)
         data = self.dbTest.findConsole(consoleThird)
-        print(data)
         self.assertEqual(len(data[1]), 14)
         #Delete Console and try to find result on DB
         self.dbTest.deleteOldConsole(consoleThird)
