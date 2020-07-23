@@ -12,3 +12,6 @@ class User :
         self.nom = info[1]
         self.prenom = info[0]
         self.email = info[2]
+    
+    def changePW(self, info):
+        self.password = info

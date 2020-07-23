@@ -39,20 +39,27 @@ class TestDB(unittest.TestCase):
         data = self.dbTest.testEmail(email)
         self.assertFalse(data)
 
-    def test_subscribe_update_delete_user(self):
+    def test_subscribe_updateInfo_updatePassword_delete_user(self):
         #Create and test user
         self.dbTest.subscribe(self.infosUser)
         data = self.dbTest.login(self.logUser)
         self.assertEqual(len(data), 6)
-        #update
-        info = ('fakeUserBis', 'fakeNameBis', 'fakeEmail@fake.com', data[0])
+        #update Info
+        id = data[0]
+        info = ('fakeUserBis', 'fakeNameBis', 'fakeEmail@fake.com', id)
         self.dbTest.updateUser(info)
         data = self.dbTest.login(self.logUser)
         self.assertEqual(len(data[1]), 11)
-        info = ('fakeUserBis', 'fakeNameBis', 'fakeEmail@fake.com', 'adminadmin')
+        #update password
+        info = ('adminadminBis', id)
+        self.dbTest.updateUserPasswordDB(info)
+        logBis = ('fakeEmail@fake.com', 'adminadminBis')
+        data = self.dbTest.login(logBis)
+        self.assertEqual(len(data), 6)
         #delete and test user
+        info = ('fakeUserBis', 'fakeNameBis', 'fakeEmail@fake.com', 'adminadminBis')
         self.dbTest.deleteUser(info)
-        data = self.dbTest.login(self.logUser)
+        data = self.dbTest.login(logBis)
         self.assertEqual(len(data), 0)
 
     def test_findGenres(self):

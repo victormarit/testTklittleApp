@@ -4,6 +4,7 @@ import tk.homepageAdmin
 import tk.homepageUser
 
 from tk.account.information import UserInformation
+from tk.account.updateUserPassword import UpdateUserPassword
 
 class MenuTK:
     def __init__(self, f1, utilisateur):
@@ -21,8 +22,8 @@ class MenuTK:
         #second menu 
         self.second_menu=tkinter.Menu(self.mainMenu, tearoff = 0)
         self.second_menu.add_command(label="Informations", command = self.userInformation)
-        self.second_menu.add_command(label="Changer mot de passe")
-        self.second_menu.add_command(label="Supprimer mon compte")    
+        self.second_menu.add_command(label="Changer mot de passe", command = self.userPassword)
+        self.second_menu.add_command(label="Supprimer mon compte", command = self.userCloseAccount)    
         #third menu 
         self.third_menu = tkinter.Menu(self.mainMenu, tearoff = 0)
         self.third_menu.add_command(label = "Pannel administratif", command = self.goPannelAdmin)
@@ -70,5 +71,13 @@ class MenuTK:
             i.destroy()
         UserInformation(user, self.frame.frame1)
 
+    def userPassword(self):
+        widget = self.frame.frame1.winfo_children()
+        for i in widget :
+            i.destroy()
+        UpdateUserPassword(user, self.frame.frame1)
+
+    def userCloseAccount(self):
+        pass
 
         
