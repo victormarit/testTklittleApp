@@ -39,13 +39,19 @@ class TestDB(unittest.TestCase):
         data = self.dbTest.testEmail(email)
         self.assertFalse(data)
 
-    def test_subscribe_delete_user(self):
+    def test_subscribe_update_delete_user(self):
         #Create and test user
         self.dbTest.subscribe(self.infosUser)
         data = self.dbTest.login(self.logUser)
         self.assertEqual(len(data), 6)
+        #update
+        info = ('fakeUserBis', 'fakeNameBis', 'fakeEmail@fake.com', data[0])
+        self.dbTest.updateUser(info)
+        data = self.dbTest.login(self.logUser)
+        self.assertEqual(len(data[1]), 11)
+        info = ('fakeUserBis', 'fakeNameBis', 'fakeEmail@fake.com', 'adminadmin')
         #delete and test user
-        self.dbTest.deleteUser(self.infosUser)
+        self.dbTest.deleteUser(info)
         data = self.dbTest.login(self.logUser)
         self.assertEqual(len(data), 0)
 

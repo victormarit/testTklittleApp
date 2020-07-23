@@ -74,7 +74,7 @@ class DB :
             self.cursor.execute(req, info)
             self.conn.commit()
         except :
-            print('Fail to delete user') 
+            print('Fail to update user') 
         finally:
             try:
                 if self.conn.is_connected():
