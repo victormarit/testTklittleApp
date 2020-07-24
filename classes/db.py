@@ -280,7 +280,7 @@ class DB :
 
 #Collection 
     def userConsoleCollection(self, info):
-        req = 'SELECT * FROM possessionconsole where possessionconsole.idUser = %s'
+        req = 'SELECT console.Nom, possessionconsole.nb FROM possessionconsole, console WHERE possessionconsole.idUser = %s AND console.idConsole = possessionconsole.idConsole'
         try : 
             self.connectionBD()
             self.cursor.execute(req, info)
@@ -297,15 +297,64 @@ class DB :
                         return data
             except: 
                 return
+
+    def userConsoleCollectionQauntity(self, info):
+        req = 'SELECT possessionconsole.nb FROM possessionconsole, console WHERE possessionconsole.idUser = %s AND console.idConsole = possessionconsole.idConsole AND console.Nom = %s'
+        try : 
+            self.connectionBD()
+            self.cursor.execute(req, info)
+            data = self.cursor.fetchone()
+        except : 
+            print('Pas de console trouvée')
+        finally:
+            try : 
+                if self.conn.is_connected():
+                    self.conn.close()
+                    if data is None :
+                        return []
+                    else :
+                        return data
+            except: 
+                return
     
     def insertConsoleUser(self, info):
-        req = 'INSERT INTO possessionconsole (idUser, idConsole) VALUES (%s, %s);'
+        req = 'INSERT INTO possessionconsole (idUser, idConsole, nb) VALUES (%s, %s, %s);'
         try :
             self.connectionBD()
             self.cursor.execute(req, info)
             self.conn.commit()
         except :
-            print('Fail to delete console') 
+            print('Fail to add console') 
+        finally:
+            try:
+                if self.conn.is_connected():
+                    self.conn.close()
+            except:
+                pass
+
+    def updateConsoleUser(self, info):
+        req = 'UPDATE possessionconsole SET possessionconsole.nb = %s WHERE possessionconsole.idConsole = %s AND possessionconsole.idUser = %s'
+        try :
+            self.connectionBD()
+            self.cursor.execute(req, info)
+            self.conn.commit()
+        except :
+            print('Fail to add console') 
+        finally:
+            try:
+                if self.conn.is_connected():
+                    self.conn.close()
+            except:
+                pass
+
+    def deleteConsoleUser(self, info):
+        req = 'DELETE FROM possessionconsole WHERE possessionconsole.idUser = %s AND possessionconsole.idConsole = %s'
+        try :
+            self.connectionBD()
+            self.cursor.execute(req, info)
+            self.conn.commit()
+        except :
+            print('Fail to add console') 
         finally:
             try:
                 if self.conn.is_connected():
