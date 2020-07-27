@@ -6,6 +6,7 @@ from tkinter import PhotoImage
 
 from tk.homepageUserChoices.seeConsole import SeeConsole
 from tk.homepageUserChoices.addConsole import AddConsole
+from tk.homepageUserChoices.seeGame import SeeGame
 
 class HomepageUser:
     def __init__(self, fenetre, user):
@@ -28,8 +29,7 @@ class HomepageUser:
         #treeview_console
         self.console = self.tree.insert('', 0, text='Consoles')
         self.tree.insert(self.console, 0, 'item1',text='Voir mes consoles', image = self.logo)
-        self.tree.insert(self.console, 1, text='Ajouter une console', image = self.logo)
-        self.tree.insert(self.console, 2, text='Retirer une console', image = self.logo)
+        self.tree.insert(self.console, 1, text='Gérer mes consoles', image = self.logo)
 
         #treeview_jeu
         self.jeu = self.tree.insert('', 1, text='Jeux')
@@ -54,15 +54,13 @@ class HomepageUser:
         elif self.tree.item(item, 'text') == 'Consoles':
             self.testFrame1_destroyChildren()
             SeeConsole(self.frame1, utilisateur)
-        elif self.tree.item(item, 'text') == 'Ajouter une console':
+        elif self.tree.item(item, 'text') == 'Gérer mes consoles':
             self.testFrame1_destroyChildren()
             AddConsole(self.frame1, utilisateur)
-            
-        elif self.tree.item(item, 'text') == 'Retirer une console':
-            self.testFrame1_destroyChildren()
 
         elif self.tree.item(item, 'text') == 'Jeux':
             self.testFrame1_destroyChildren()
+            SeeGame(self.frame1, utilisateur)
         elif self.tree.item(item, 'text') == 'Voir mes jeux':
             self.testFrame1_destroyChildren()
         elif self.tree.item(item, 'text') == 'Ajouter un jeu':
