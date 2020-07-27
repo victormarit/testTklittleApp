@@ -1,24 +1,24 @@
 from db import DB
 
-class DbConsole(DB):
+class DbGenre(DB):
     def __init__(self):
         DB.__init__(self)
 
-    def findAllConsoles(self):
+    def findAllGenres(self):
         '''
-        to find all consoles in DB
-        return 
-        -If they are some console in DB : list ['id' , 'consoleName', 'builderCompany', 'logoPath', 'releaseYear']
-        -If thez are no console in DB : return a void list
-        -If connection failure : void return
+        to get all kind of genres
+        return :
+        -[(idGenre', 'nameGenre'),] 
+        -[]
+        -void
         '''
-        req = 'SELECT * FROM console'
+        req = 'SELECT * FROM genre'
         try :
             self.connectionDB()
             self.cursor.execute(req)
             data = self.cursor.fetchall()
         except :
-            print('Fail to find Consoles') 
+            print('Fail to find Genre') 
         finally:
             try:
                 if self.connection.is_connected():
@@ -29,22 +29,24 @@ class DbConsole(DB):
                         return data
             except:
                 return
-
-    def findOneConsole(self, info):
+    
+    def findOneGenre(self, info):
         '''
-        to find one console in the DB
-        param :
-        -info : tuple ('console.nom',)
+        to find a specific genre in DB
+        params :
+        -info : ('genreName',)
         return :
-        -if counsole found : ('id', 'consoleName', 'consoleBuilder', 'logoPath', 'releaseYear')
+        -[(idGenre', 'nameGenre'),] 
+        -[]
+        -void
         '''
-        req = 'SELECT * FROM console WHERE console.Nom = %s'
+        req = 'SELECT * FROM genre WHERE genre.nomGenre = %s'
         try :
             self.connectionDB()
             self.cursor.execute(req, info)
             data = self.cursor.fetchone()
         except :
-            print('Fail to find Console') 
+            print('Fail to find Genre') 
         finally:
             try:
                 if self.connection.is_connected():
@@ -55,14 +57,14 @@ class DbConsole(DB):
                         return data
             except:
                 return
-                
-    def addNewConsole(self, info):
+    
+    def addNewGenre(self, info):
         '''
-        To add console in DB
-        params :
-        -info : tuple ('consoleName','consoleBuilder','logoPath','relaseYear')
+        to add a genre in DB
+        params 
+        -info : ('genreName')
         '''
-        req = 'INSERT INTO console (Nom, Constructeur, logo, annee) VALUES(%s, %s, %s, %s);'
+        req = 'INSERT INTO genre (nomGenre) VALUES(%s);'
         try:
             self.connectionDB()
             self.cursor.execute(req, info)
@@ -74,41 +76,41 @@ class DbConsole(DB):
                 if self.connection.is_connected():
                     self.connection.close()
             except:
-                pass    
- 
-    def updateConsole(self, info):
+                pass
+
+    def updateGenre(self, info):
         '''
-        to update console informations
-        params 
-        -infos : tuple ('consoleName', 'consoleBuilder', 'logoPath', 'consoleYear', 'consoleId')
+        to update genre name
+        params : 
+        -info : ('genreName', 'idGenre')
         '''
-        req = 'UPDATE console SET console.Nom = %s, console.Constructeur = %s, console.logo = %s, console.annee = %s WHERE console.idConsole = %s'
+        req = 'UPDATE genre SET genre.nomGenre = %s WHERE genre.idGenre = %s'
         try :
             self.connectionDB()
             self.cursor.execute(req, info)
             self.connection.commit()
         except :
-            print('Fail to update console') 
+            print('Fail to update genre') 
         finally:
             try:
                 if self.connection.is_connected():
                     self.connection.close()
             except:
                 pass
-            
-    def deleteConsole(self, info):
+
+    def deleteOldGenre(self, info):
         '''
-        To delete console
+        to delete genre in DB
         params : 
-        info : tuple ('consoleId',)
+        info : ('genreName',)
         '''
-        req = 'DELETE FROM console WHERE console.Nom = %s;'
+        req = 'DELETE FROM genre WHERE genre.nomGenre = %s;'
         try :
             self.connectionDB()
             self.cursor.execute(req, info)
             self.connection.commit()
         except :
-            print('Fail to delete console') 
+            print('Fail to delete genre') 
         finally:
             try:
                 if self.connection.is_connected():
