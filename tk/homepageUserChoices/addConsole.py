@@ -91,7 +91,6 @@ class AddConsole:
                         db.deleteConsoleUser(info)
                         self.annuler()
 
-
     def insertQuantityConsole(self, useless):
         info = (utilisateur.id, self.box.get())
         db = classes.db.DB()
@@ -105,5 +104,4 @@ class AddConsole:
     def annuler(self):
         self.frameApp.destroy()
         SeeConsole(mainFrame, utilisateur)
-        db = classes.db.DB()
         

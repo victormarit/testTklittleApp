@@ -1,4 +1,4 @@
-from db import DB
+from classes.testNewDBConnection.db import DB
 
 class DbConsole(DB):
     def __init__(self):

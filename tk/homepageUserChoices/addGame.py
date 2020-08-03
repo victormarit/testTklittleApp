@@ -1,11 +1,16 @@
 import tkinter
 from tkinter import messagebox
+from tkinter import ttk
+
 from classes.testNewDBConnection.dbGame import DbGame 
+
+from tk.homepageUserChoices.addGameInDb import AddGameInDB
 
 class AddGame:
     def __init__(self, frame, user):
         self.utilisateur = user
-        self.frameApp = tkinter.Frame(frame)
+        self.frame = frame
+        self.frameApp = tkinter.Frame(self.frame)
         self.frameApp.pack(side = 'left', fill='both', expand=1)
         #
         self.secondFrame = tkinter.Frame(self.frameApp)
@@ -15,7 +20,7 @@ class AddGame:
         self.label.pack()
         self.void = tkinter.Label(self.secondFrame, text = '')
         self.void.pack()
-
+        #
         self.thridFrame = tkinter.Frame(self.secondFrame)
         self.thridFrame.pack()
         self.entryGame = tkinter.Entry(self.thridFrame)
@@ -30,8 +35,14 @@ class AddGame:
         if len(data) == 0 :
             test = messagebox.askyesno('Ajouter Jeu', 'Pas de jeux correspondant, voulez vous l\'ajouter ?')
             if test == True : 
-                pass
+                self.newGame()
         elif len(data) > 0:
             messagebox.showinfo('Erreur', 'La fonction n\'a pas encore été implémenté')
         else:
             messagebox.showerror('Erreur', 'Connexion à la base de données perdue')
+    
+    def newGame(self):
+        test = self.frame.winfo_children()
+        for i in test :
+            i.destroy()
+        AddGameInDB(self.frame, self.utilisateur)

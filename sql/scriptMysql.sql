@@ -43,17 +43,17 @@ CREATE TABLE jeu(
    Nom VARCHAR(50) NOT NULL,
    pegi INT,
    idGenre INT NOT NULL,
-   FOREIGN KEY(idGenre) REFERENCES Genre(idGenre)
+   idConsole INT NOT NULL,
+   FOREIGN KEY(idGenre) REFERENCES Genre(idGenre),
+   FOREIGN KEY(idConsole) REFERENCES Console(idConsole)
 )ENGINE=InnoDB;
 
-CREATE TABLE possessionJeu(
+CREATE TABLE gameCollection(
    idUser INT,
-   idConsole INT,
    idJeu INT,
    nb INT,
-   PRIMARY KEY(idUser, idConsole, idJeu),
+   PRIMARY KEY(idUser, idJeu),
    FOREIGN KEY(idUser) REFERENCES user(idUser),
-   FOREIGN KEY(idConsole) REFERENCES Console(idConsole),
    FOREIGN KEY(idJeu) REFERENCES jeu(idJeu)
 )ENGINE=InnoDB;
 
