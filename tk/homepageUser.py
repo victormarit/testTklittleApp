@@ -7,6 +7,7 @@ from tkinter import PhotoImage
 from tk.homepageUserChoices.seeConsole import SeeConsole
 from tk.homepageUserChoices.addConsole import AddConsole
 from tk.homepageUserChoices.seeGame import SeeGame
+from tk.homepageUserChoices.addGame import AddGame
 
 class HomepageUser:
     def __init__(self, fenetre, user):
@@ -63,8 +64,10 @@ class HomepageUser:
             SeeGame(self.frame1, utilisateur)
         elif self.tree.item(item, 'text') == 'Voir mes jeux':
             self.testFrame1_destroyChildren()
+            SeeGame(self.frame1, utilisateur)
         elif self.tree.item(item, 'text') == 'Ajouter un jeu':
             self.testFrame1_destroyChildren()
+            AddGame(self.frame1, utilisateur)
         elif self.tree.item(item, 'text') == 'Retirer un jeu':
             self.testFrame1_destroyChildren()
 
