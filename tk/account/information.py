@@ -2,7 +2,7 @@ import tkinter
 from tkinter import messagebox
 
 from fonctions.fonctionsTk import hashPassword
-from classes.db import DB
+from classes.testNewDBConnection.dbUser import DbUser
 
 class UserInformation : 
     def __init__(self, utilisateur, frame):
@@ -73,7 +73,7 @@ class UserInformation :
 
     def updateUserInDB(self):
         info = (user.nom, user.prenom, user.email, user.id)
-        bdd = DB()
+        bdd = DbUser()
         bdd.updateUser(info)
 
     def controlPW(self):

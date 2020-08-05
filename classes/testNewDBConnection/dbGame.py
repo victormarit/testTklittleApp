@@ -161,7 +161,6 @@ class DbGame(DB):
             else:
                 return 
 
-
     def delAllGameCollection(self, info):
         '''
         to delete all user collection

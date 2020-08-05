@@ -1,6 +1,7 @@
 import tkinter
 from tkinter import messagebox
-from classes.db import DB
+
+from classes.testNewDBConnection.dbConsoleCollection import DbConsoleCollection
 
 class SeeConsole:
     def __init__(self, frame, user):
@@ -10,7 +11,7 @@ class SeeConsole:
         self.secondFrame = tkinter.Frame(self.frameApp)
         self.secondFrame.pack(side = 'top', fill='both', expand= 1 )
         #
-        self.db = DB()
+        self.db = DbConsoleCollection()
         self.data = self.db.userConsoleCollection((user.id,))
         self.seeAllItem()
 

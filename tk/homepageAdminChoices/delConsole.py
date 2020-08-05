@@ -1,7 +1,8 @@
 import tkinter
 from tkinter import ttk
-import classes.db
 from tkinter import messagebox
+
+from classes.testNewDBConnection.dbConsole import DbConsole
 from tk.homepageAdminChoices.seeConsole import SeeConsole
 
 
@@ -30,8 +31,8 @@ class DelConsole:
 
 
     def getAllConsole(self):
-        db = classes.db.DB()
-        data = db.findConsoles()
+        db = DbConsole()
+        data = db.findAllConsoles()
         for Console in data : 
             self.values.append(Console[1])
     
@@ -43,8 +44,8 @@ class DelConsole:
         info = (self.box.get(),)
         test = messagebox.askokcancel('Valider', 'Etes-vous sur de vouloir supprimer ce contenu')
         if test : 
-            db = classes.db.DB()
-            db.deleteOldConsole(info)
+            db = DbConsole()
+            db.deleteConsole(info)
             self.frameApp.destroy()
             SeeConsole(mainFrame)
 

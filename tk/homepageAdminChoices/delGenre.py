@@ -1,8 +1,8 @@
 import tkinter
 from tkinter import ttk
-import classes.db
 from tkinter import messagebox
 from tk.homepageAdminChoices.seeGenre import SeeGenre
+from classes.testNewDBConnection.dbGenre import DbGenre
 
 class DelGenre:
     def __init__(self, frame):
@@ -29,8 +29,8 @@ class DelGenre:
 
 
     def getAllGenre(self):
-        db = classes.db.DB()
-        data = db.findGenres()
+        db = DbGenre()
+        data = db.findAllGenres()
         for genre in data : 
             self.values.append(genre[1])
     
@@ -42,7 +42,7 @@ class DelGenre:
         info = (self.box.get(),)
         test = messagebox.askokcancel('Valider', 'Etes-vous sur de vouloir supprimer ce contenu')
         if test : 
-            db = classes.db.DB()
+            db = DbGenre()
             db.deleteOldGenre(info)
             self.frameApp.destroy()
             SeeGenre(mainFrame)

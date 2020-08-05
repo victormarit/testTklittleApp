@@ -1,10 +1,10 @@
 import tkinter
 from tkinter import messagebox
 from tkinter import ttk
-
 from tk.homepageUserChoices.seeConsole import SeeConsole
 
-import classes.db 
+from classes.testNewDBConnection.dbConsoleCollection import DbConsoleCollection
+from classes.testNewDBConnection.dbConsole import DbConsole
 
 class AddConsole:
     def __init__(self, frame, user):
@@ -13,7 +13,6 @@ class AddConsole:
         utilisateur = user
         mainFrame = frame
         self.values = []
-        
         #Frame
         self.frameApp = tkinter.Frame(frame)
         self.frameApp.pack()
@@ -48,8 +47,8 @@ class AddConsole:
 
 
     def getAllConsole(self):
-        db = classes.db.DB()
-        data = db.findConsoles()
+        db = DbConsole()
+        data = db.findAllConsoles()
         for Console in data : 
             self.values.append(Console[1])
 
@@ -66,40 +65,38 @@ class AddConsole:
             messagebox.showerror('Alert', 'La quantité possédée doit être un nombre entier positif')
         else: 
             if true and self.box.get() != '':
+                db = DbConsole()
+                database = DbConsoleCollection()
                 if int(self.quantLab.cget('text')) == 0 and test1 > 0 :
-                    db = classes.db.DB()
-                    data = db.findConsole((self.box.get(), ))
+                    data = db.findOneConsole((self.box.get(), ))
                     info = (utilisateur.id, data[0], test1)
                     test = messagebox.askyesno('Valider', 'Ajouter cette console ? ')
                     if test :  
-                        db.insertConsoleUser(info)
+                        database.insertConsoleUser(info)
                         self.annuler()
                 elif int(self.quantLab.cget('text')) != 0 and test1 > 0 :
-                    db = classes.db.DB()
-                    data = db.findConsole((self.box.get(), ))
+                    data = db.findOneConsole((self.box.get(), ))
                     info = (test1, data[0], utilisateur.id)
                     test = messagebox.askyesno('Valider', 'Modifier la quantité ? ')
-                    if test :  
-                        db.updateConsoleUser(info)
+                    if test :
+                        database.updateConsoleUser(info)
                         self.annuler()
                 else :
-                    db = classes.db.DB()
-                    data = db.findConsole((self.box.get(), ))
+                    data = db.findOneConsole((self.box.get(), ))
                     info = (utilisateur.id, data[0])
                     test = messagebox.askyesno('Supprimer', 'Etes vous sur de vouloir supprimer cette console ?')
                     if test :  
-                        db.deleteConsoleUser(info)
+                        database.deleteConsoleUser(info)
                         self.annuler()
 
     def insertQuantityConsole(self, useless):
         info = (utilisateur.id, self.box.get())
-        db = classes.db.DB()
-        data = db.userConsoleCollectionQauntity(info)
+        database = DbConsoleCollection()
+        data = database.userConsoleCollectionQuantity(info)
         if len(data) > 0:
             self.quantLab.config(text = data[0] )
         else: 
             self.quantLab.config(text = 0 )
-
 
     def annuler(self):
         self.frameApp.destroy()

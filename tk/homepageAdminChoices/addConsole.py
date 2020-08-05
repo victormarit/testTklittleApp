@@ -1,7 +1,7 @@
 import tkinter
 from tkinter import messagebox
 from tk.homepageAdminChoices.seeConsole import SeeConsole
-from classes.db import DB
+from classes.testNewDBConnection.dbConsole import DbConsole
 
 
 class AddConsole:
@@ -55,11 +55,9 @@ class AddConsole:
             test = messagebox.askokcancel('Valider', 'Etes-vous sur de vouloir ajouter cette console ?')
             if test : 
                 info = (self.nameEntry.get(), self.constructeurEntry.get(), self.logoEntry.get(), self.anneeEntry.get())
-                bd = DB() 
+                bd = DbConsole() 
                 bd.addNewConsole(info)
                 self.frameApp.destroy()
                 SeeConsole(mainFrame)
-
         else:
-            alert = messagebox.showinfo('Erreur', 'Veuillez remplir tous les champs')
-            alert.pack()
+            messagebox.showinfo('Erreur', 'Veuillez remplir tous les champs')

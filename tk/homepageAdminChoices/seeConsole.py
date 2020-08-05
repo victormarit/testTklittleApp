@@ -1,6 +1,6 @@
 import tkinter
 from tkinter import messagebox
-import classes.db
+from classes.testNewDBConnection.dbConsole import DbConsole
 
 class SeeConsole:
     def __init__(self, frame):
@@ -10,8 +10,8 @@ class SeeConsole:
         self.secondFrame = tkinter.Frame(self.frameApp)
         self.secondFrame.pack(side = 'top', fill='both', expand= 1 )
         #
-        self.db = classes.db.DB()
-        self.data = self.db.findConsoles()
+        self.db = DbConsole()
+        self.data = self.db.findAllConsoles()
         self.seeAllItem()
     
     def seeAllItem(self):

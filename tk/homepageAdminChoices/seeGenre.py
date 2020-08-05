@@ -1,6 +1,6 @@
 import tkinter
-import classes.db
 from tkinter import messagebox
+from classes.testNewDBConnection.dbGenre import DbGenre
 
 class SeeGenre:
     def __init__(self, frame):
@@ -10,8 +10,8 @@ class SeeGenre:
         self.secondFrame = tkinter.Frame(self.frameApp)
         self.secondFrame.pack(side = 'top', fill='both', expand= 1 )
         #
-        self.db = classes.db.DB()
-        self.data = self.db.findGenres()
+        self.db = DbGenre()
+        self.data = self.db.findAllGenres()
         self.seeAllItem()
     
     def seeAllItem(self):

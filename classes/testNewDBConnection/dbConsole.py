@@ -12,7 +12,7 @@ class DbConsole(DB):
         -If thez are no console in DB : return a void list
         -If connection failure : void return
         '''
-        req = 'SELECT * FROM console'
+        req = 'SELECT * FROM console ORDER BY console.Constructeur DESC, console.annee DESC '
         try :
             self.connectionDB()
             self.cursor.execute(req)

@@ -1,7 +1,7 @@
 import tkinter
 from tkinter import messagebox
 from tk.homepageAdminChoices.seeGenre import SeeGenre
-import classes.db
+from classes.testNewDBConnection.dbGenre import DbGenre
 
 class AddGenre:
     def __init__(self, frame):
@@ -39,7 +39,7 @@ class AddGenre:
             test = messagebox.askokcancel('Valider', 'Etes-vous sur de vouloir Ajouter ce genre ?')
             if test :
                 info = (self.nameEntry.get(),)
-                bd = classes.db.DB()
+                bd = DbGenre()
                 bd.addNewGenre(info)
                 self.frameApp.destroy()
                 SeeGenre(mainFrame)

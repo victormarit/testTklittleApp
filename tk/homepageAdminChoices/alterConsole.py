@@ -1,7 +1,7 @@
 import tkinter
 from tkinter import messagebox
 from tkinter import ttk
-from classes.db import DB
+from classes.testNewDBConnection.dbConsole import DbConsole
 from tk.homepageAdminChoices.seeConsole import SeeConsole
 
 class AlterConsole:
@@ -54,8 +54,8 @@ class AlterConsole:
         self.box.bind("<<ComboboxSelected>>", self.auto_completion)
 
     def getAllConsoles(self):
-        db = DB()
-        data = db.findConsoles()
+        db = DbConsole()
+        data = db.findAllConsoles()
         for console in data : 
             self.values.append(console[1])
 
@@ -68,8 +68,8 @@ class AlterConsole:
     def auto_completion(self, useless):
         self.delEntry()
         info = (self.box.get(),)
-        db = DB()
-        data = db.findConsole(info)
+        db = DbConsole()
+        data = db.findOneConsole(info)
         self.nameEntry.insert(1, data[1])
         self.constructeurEntry.insert(2, data[2])
         self.logoEntry.insert(4, data[3])
@@ -81,8 +81,8 @@ class AlterConsole:
             info = (self.nameEntry.get(), self.constructeurEntry.get(), self.logoEntry.get(), self.anneeEntry.get(), self.id)
             test = messagebox.askokcancel('Valider', 'Etes vous sur de vouloir modifier cette console')
             if test : 
-                db = DB()
-                db.updateConsole(info) #create fonction
+                db = DbConsole()
+                db.updateConsole(info)
                 self.frameApp.destroy()
                 SeeConsole(mainFrame)
         else : 

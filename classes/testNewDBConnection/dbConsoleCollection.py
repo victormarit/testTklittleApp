@@ -112,4 +112,21 @@ class DbConsoleCollection(DB):
             except:
                 pass
 
-
+    def userConsoleCollectionQuantity(self, info):
+        req = 'SELECT possessionconsole.nb FROM possessionconsole, console WHERE possessionconsole.idUser = %s AND console.idConsole = possessionconsole.idConsole AND console.Nom = %s'
+        try : 
+            self.connectionDB()
+            self.cursor.execute(req, info)
+            data = self.cursor.fetchone()
+        except : 
+            print('Pas de console trouvée')
+        finally:
+            try : 
+                if self.connection.is_connected():
+                    self.connection.close()
+                    if data is None :
+                        return []
+                    else :
+                        return data
+            except: 
+                return

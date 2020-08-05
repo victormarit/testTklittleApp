@@ -1,7 +1,7 @@
 import tkinter
 from tkinter import messagebox
 from tkinter import ttk
-from classes.db import DB
+from classes.testNewDBConnection.dbGenre import DbGenre
 from tk.homepageAdminChoices.seeGenre import SeeGenre
 
 class AlterGenre:
@@ -39,8 +39,8 @@ class AlterGenre:
         self.box.bind("<<ComboboxSelected>>", self.auto_completion)
 
     def getAllGenres(self):
-        db = DB()
-        data = db.findGenres()
+        db = DbGenre()
+        data = db.findAllGenres()
         for console in data : 
             self.values.append(console[1])
 
@@ -50,8 +50,8 @@ class AlterGenre:
     def auto_completion(self, useless):
         self.delEntry()
         info = (self.box.get(),)
-        db = DB()
-        data = db.findGenre(info)
+        db = DbGenre()
+        data = db.findOneGenre(info)
         self.nameEntry.insert(1, data[1])
         self.id = data[0]
     
@@ -61,7 +61,7 @@ class AlterGenre:
             info = (self.nameEntry.get(),  self.id)
             test = messagebox.askokcancel('Valider', 'Etes vous sur de vouloir modifier ce genre')
             if test : 
-                db = DB()
+                db = DbGenre()
                 db.updateGenre(info) 
                 self.frameApp.destroy()
                 SeeGenre(mainFrame)
