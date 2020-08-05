@@ -56,3 +56,59 @@ class DbGame(DB):
             else:
                 return 
         
+    def addGameInDB(self, info):
+        '''
+        to a game in DB
+        -params 
+        info = (gameName, consoleID, genreId, pegi)
+        '''
+        req = 'INSERT INTO jeu (Nom, idConsole, pegi, idGenre) VALUES (%s, %s, %s, %s)'
+        try:
+            self.connectionDB()
+            self.cursor.execute(req, info)
+            self.connection.commit()
+        except:
+            print('Fail to add game in database')
+        finally: 
+            if self.connection.is_connected():
+                self.connection.close()
+
+    def addGameCollection(self, info):
+        '''
+        to add game in user collection
+        params :
+        -info = (idUser, idGame, nombre)
+        '''
+        req = 'INSERT INTO gamecollection (idUser, idJeu, nb) VALUES (%s, %s, %s)'
+        try:
+            self.connectionDB()
+            self.cursor.execute(req, info)
+            self.connection.commit()
+        except:
+            print('Fail to add game in user collection')
+        finally: 
+            if self.connection.is_connected():
+                self.connection.close()
+
+    def getGameId(self, info):
+        '''
+        to get game id
+        params :
+        -info = (gameName,)
+        '''
+        req = 'SELECT idJeu FROM jeu WHERE jeu.Nom = %s '
+        try:
+            self.connectionDB()
+            self.cursor.execute(req, info)
+            data = self.cursor.fetchone()
+        except:
+            print('Fail to get game id')
+        finally: 
+            if self.connection.is_connected():
+                self.connection.close()
+                if len(data) > 0 :
+                    return data
+                else: 
+                    return []
+            else:
+                return 

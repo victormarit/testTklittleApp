@@ -4,6 +4,7 @@ from tkinter import ttk
 
 from classes.testNewDBConnection.dbConsole import DbConsole
 from classes.testNewDBConnection.dbGenre import DbGenre
+from classes.testNewDBConnection.dbGame import DbGame
 
 from tk.homepageUserChoices.seeGame import SeeGame
 
@@ -41,9 +42,11 @@ class AddGameInDB:
         self.genre.grid(row = 5, column = 0,  sticky = 'w')
         self.genreBox = ttk.Combobox(self.secondFrame, values = self.valuesGenre, state = 'readonly', width = 20)
         self.genreBox.grid(row = 5, column = 1)
-        self.voidLabel2 = tkinter.Label(self.secondFrame, text = '')
-        self.voidLabel2.grid(row = 6, column = 0)
-        self.buttonAddGame = tkinter.Button(self.secondFrame, text = "Ajouter", width = 10)
+        self.nb = tkinter.Label(self.secondFrame, text = 'Quantité :')
+        self.nb.grid(row = 6, column = 0)
+        self.nbEntry = tkinter.Entry(self.secondFrame, width = 23)
+        self.nbEntry.grid(row = 6, column = 1)
+        self.buttonAddGame = tkinter.Button(self.secondFrame, text = "Ajouter", width = 10, command = self.testValues)
         self.buttonAddGame.grid(row=7, column = 0, columnspan = 2, pady = 5)
         self.buttonReturn = tkinter.Button(self.secondFrame, text = 'Annuler', width = 10, command = self.returnMenu)
         self.buttonReturn.grid(row=8, column = 0, columnspan = 2)
@@ -64,9 +67,48 @@ class AddGameInDB:
         self.secondFrame.destroy()
         SeeGame(self.frame, self.user)
 
-    def addGame(self):
-        if self.nameEntry.get() == '' and self.pegiEntry.get() == '' and self.consoleEntry.get() == '' and self.genreBox.get() == '':
-            messagebox.showerror('Attention', 'Veuillez remplir tous les champs')
+    def testValues(self):
+        if self.nameEntry.get() == '' and self.pegiEntry.get() == '' and self.consoleEntry.get() == '':
+            messagebox.showerror('Attention', 'Veuillez remplir les champs obligatoirs')
         else:
-            #try pegiEntry
-            pass
+            try :
+                int(self.pegiEntry.get())
+                if int(self.pegiEntry.get())>0 and int(self.pegiEntry.get())<19:
+                    self.addGame()
+                else:
+                    messagebox.showerror('Erreur', 'Pegi devrait être un entier entre 0 et 18')
+            except:
+                messagebox.showerror('Erreur', 'Pegi devrait être un entier')
+
+    def addGame(self):
+        console = self.getConsoleId()
+        genre = self.getGenreId()
+        game = (self.nameEntry.get(), console, int(self.pegiEntry.get()), genre)
+        database = DbGame()
+        database.addGameInDB(game)
+        self.addGameCollection()
+
+    def getConsoleId(self):
+        database = DbConsole()
+        id = database.findOneConsole((self.consoleEntry.get(),))
+        return id[0]
+    
+    def getGenreId(self):
+        database = DbGenre()
+        id = database.findOneGenre((self.genreBox.get(),))
+        if len(id) > 0 :
+            return id[0]
+        else : 
+            return 
+    
+    def addGameCollection(self):
+        gameId = self.getGameId()
+        data = (self.user.id, gameId, int(self.nbEntry.get()))
+        db = DbGame()
+        db.addGameCollection(data)
+        self.returnMenu()
+    
+    def getGameId(self):
+        db = DbGame()
+        id = db.getGameId((self.nameEntry.get(),))
+        return id[0]
