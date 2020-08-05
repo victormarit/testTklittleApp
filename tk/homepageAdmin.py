@@ -39,6 +39,11 @@ class HomepageAdmin :
         self.tree.insert(self.genre, 0, text='Ajouter un genre')
         self.tree.insert(self.genre, 1, text='Modifier un genre')
         self.tree.insert(self.genre, 2, text='Supprimer un genre')
+        #treeview_game
+        self.game = self.tree.insert('', 1, text='Jeux')
+        self.tree.insert(self.game, 0, text='Ajouter un jeu')
+        self.tree.insert(self.game, 1, text='Modifier un jeu')
+        self.tree.insert(self.game, 2, text='Supprimer un jeu')
         #find tree
         self.tree.bind("<Double-1>", self.onDoubleClick)
         #frameCanva

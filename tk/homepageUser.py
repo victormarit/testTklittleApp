@@ -34,7 +34,11 @@ class HomepageUser:
         self.jeu = self.tree.insert('', 1, text='Jeux')
         self.tree.insert(self.jeu, 0, text='Voir mes jeux')
         self.tree.insert(self.jeu, 1, text='Ajouter un jeu')
-        self.tree.insert(self.jeu, 2, text='Retirer un jeu')
+        self.tree.insert(self.jeu, 2, text='Supprimer un jeu')
+        #treeview_wishList
+        self.wishList = self.tree.insert('', 2, text = 'Liste de souhaits')
+        self.tree.insert(self.wishList, 0, text = 'Jeux voulus')
+        self.tree.insert(self.wishList, 1, text = 'Consoles voulues')
 
 
         #find tree
