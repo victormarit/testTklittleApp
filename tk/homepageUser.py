@@ -1,5 +1,3 @@
-import sys
-sys.path.append('..')
 from tkinter import ttk
 import tkinter
 from tkinter import PhotoImage

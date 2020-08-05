@@ -1,4 +1,4 @@
-from db import DB
+from classes.testNewDBConnection.db import DB
 
 class DbConsoleCollection(DB):
     def __init__(self):
@@ -91,4 +91,25 @@ class DbConsoleCollection(DB):
                     self.connection.close()
             except:
                 pass
+
+    def delAllConsoleCollection(self, info):
+        '''
+        to delete all user console collection
+        params:
+        -info = (userId,)
+        '''
+        req = 'DELETE FROM possessionconsole WHERE possessionconsole.idUser = %s'
+        try :
+            self.connectionDB()
+            self.cursor.execute(req, info)
+            self.connection.commit()
+        except :
+            print('Fail to add console') 
+        finally:
+            try:
+                if self.connection.is_connected():
+                    self.connection.close()
+            except:
+                pass
+
 

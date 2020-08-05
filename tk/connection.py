@@ -1,9 +1,15 @@
 import tkinter
 from tkinter import messagebox
+
+#function
 from fonctions.fonctionsTk import hashPassword
+
+#tk
 import tk.subscribe
 import tk.menu
-import classes.db
+
+# classe DB
+from classes.testNewDBConnection.dbUser import DbUser
 import classes.user
 
 class FrameConnection :
@@ -35,7 +41,7 @@ class FrameConnection :
         if(self.idEntry.get() != '' and self.mpEntry.get() != ''):
             password = hashPassword(self.mpEntry.get())
             logs = (self.idEntry.get(), password)
-            bdd = classes.db.DB()
+            bdd = DbUser()
             info = bdd.login(logs)
             if info is None : 
                 messagebox.showinfo("Erreur", "Echec de la connexion à la base de données")

@@ -29,6 +29,31 @@ class DbGame(DB):
             else:
                 return 
     
+    def getGameSearch(self, info):
+        '''
+        to get a list agame in function of a search 
+        params 
+        info = nameGame
+        return 
+        data [(,),]
+        '''
+        req = f'SELECT * FROM jeu WHERE jeu.Nom LIKE "%{info}%"'
+        try:
+            self.connectionDB()
+            self.cursor.execute(req)
+            data = self.cursor.fetchall()
+        except :
+            print('Fail to find game')
+        finally:
+            if self.connection.is_connected():
+                self.connection.close()
+                if len(data) > 0 :
+                    return data
+                else: 
+                    return []
+            else:
+                return 
+
     def getUserGames(self, idUser):
         '''
         to find all user games 
@@ -39,13 +64,13 @@ class DbGame(DB):
         If thez are no game in DB : return a void list
         If connection failure : void return
         '''
-        req = f'SELECT  jeu.Nom FROM jeu WHERE jeu.Nom LIKE "% {idUser} %"'
+        req = 'SELECT * FROM gamecollection WHERE idUser = %s'
         try:
             self.connectionDB()
-            self.cursor.execute(req)
+            self.cursor.execute(req, idUser)
             data = self.cursor.fetchall()
         except :
-            print('Fail to find game')
+            print('Fail to find game(s)')
         finally:
             if self.connection.is_connected():
                 self.connection.close()
@@ -112,3 +137,44 @@ class DbGame(DB):
                     return []
             else:
                 return 
+
+    def getGameName(self, info):
+        '''
+        to get game name
+        params :
+        -info = (gameId,)
+        '''
+        req = 'SELECT Nom FROM jeu WHERE jeu.idJeu = %s '
+        try:
+            self.connectionDB()
+            self.cursor.execute(req, info)
+            data = self.cursor.fetchone()
+        except:
+            print('Fail to get game name')
+        finally: 
+            if self.connection.is_connected():
+                self.connection.close()
+                if len(data) > 0 :
+                    return data
+                else: 
+                    return []
+            else:
+                return 
+
+
+    def delAllGameCollection(self, info):
+        '''
+        to delete all user collection
+        params : 
+        info = (userId,)
+        '''
+        req = 'DELETE FROM gamecollection WHERE gamecollection.idUser = %s'
+        try:
+            self.connectionDB()
+            self.cursor.execute(req, info)
+            self.connection.commit
+        except:
+            print('Fail to delete games')
+        finally: 
+            if self.connection.is_connected():
+                self.connection.close()

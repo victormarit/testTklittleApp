@@ -2,7 +2,9 @@ import tkinter
 from tkinter import messagebox
 
 from fonctions.fonctionsTk import hashPassword
-from classes.db import DB
+from classes.testNewDBConnection.dbUser import DbUser
+from classes.testNewDBConnection.dbConsoleCollection import DbConsoleCollection
+from classes.testNewDBConnection.dbGame import DbGame
 
 class DelAccount:
     def __init__(self, utilisateur, frame, father):
@@ -48,8 +50,16 @@ class DelAccount:
                 else: 
                     test = messagebox.askokcancel("Valider", 'Etes vous sûr de vouloir supprimer votre compte ?')
                     if test : 
+                        #delConsoles
+                        db = DbConsoleCollection()
+                        information = (user.id,)
+                        db.delAllConsoleCollection(information)                    
+                        #delGames
+                        database = DbGame()
+                        database.delAllGameCollection(information)
+                        #delAccount
                         info = (user.nom, user.prenom, user.email, user.password)
-                        bdd = DB()
+                        bdd = DbUser()
                         bdd.deleteUser(info)
                         messagebox.showinfo('Information', 'Votre compte a été supprimé, merci d\'avoir utilisé notre plateforme')
                         parent.logOut()

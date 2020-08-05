@@ -1,7 +1,7 @@
 import tkinter
 from tkinter import messagebox
 import tk.connection
-import classes.db
+from classes.testNewDBConnection.dbUser import DbUser
 import classes.user
 import fonctions.fonctionsTk
 import tk.menu
@@ -43,8 +43,8 @@ class Subscribe :
             if not re.match(r"[^@]+@[^@]+\.[^@]+", self.emailEntry.get()):
                 messagebox.showinfo('Erreur','Adresse email invalide')
             else :
-                bdd = classes.db.DB()
-                test = bdd.testEmail(self.emailEntry.get())
+                bdd = DbUser()
+                test = bdd.testEmail((self.emailEntry.get(),))
                 if test :
                     password = fonctions.fonctionsTk.hashPassword(self.mpEntry.get())
                     data = (self.lnEntry.get(), self.fnEntry.get(), self.emailEntry.get(), password)

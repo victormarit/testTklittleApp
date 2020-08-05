@@ -1,4 +1,4 @@
-from db import DB
+from classes.testNewDBConnection.db import DB
 
 class DbUser(DB):
     def __init__(self):
@@ -101,7 +101,7 @@ class DbUser(DB):
                 pass
 
     def updateUserPasswordDB(self, info):
-            '''
+        '''
         to update user password 
         params : 
         -infos : tuple ('password', 'id')
