@@ -12,6 +12,9 @@ from tk.homepageAdminChoices.seeGenre import SeeGenre
 from tk.homepageAdminChoices.addGenre import AddGenre
 from tk.homepageAdminChoices.alterGenre import AlterGenre
 from tk.homepageAdminChoices.delGenre import DelGenre
+from tk.homepageAdminChoices.addGame import AddGame
+from tk.homepageAdminChoices.alterGame import AlterGame
+from tk.homepageAdminChoices.delGame import DelGame
 
 
 class HomepageAdmin :
@@ -40,7 +43,7 @@ class HomepageAdmin :
         self.tree.insert(self.genre, 1, text='Modifier un genre')
         self.tree.insert(self.genre, 2, text='Supprimer un genre')
         #treeview_game
-        self.game = self.tree.insert('', 1, text='Jeux')
+        self.game = self.tree.insert('', 2, text='Jeux')
         self.tree.insert(self.game, 0, text='Ajouter un jeu')
         self.tree.insert(self.game, 1, text='Modifier un jeu')
         self.tree.insert(self.game, 2, text='Supprimer un jeu')
@@ -76,7 +79,16 @@ class HomepageAdmin :
         elif self.tree.item(item, 'text') == 'Supprimer un genre':
             self.testFrame1_destroyChildren()
             DelGenre(self.frame1)
-
+        
+        elif self.tree.item(item, 'text') == 'Ajouter un jeu':
+            self.testFrame1_destroyChildren()
+            AddGame(self.frame1)
+        elif self.tree.item(item, 'text') == 'Modifier un jeu':
+            self.testFrame1_destroyChildren()
+            AlterGame(self.frame1)
+        elif self.tree.item(item, 'text') == 'Supprimer un jeu':
+            self.testFrame1_destroyChildren()
+            DelGame(self.frame1)
         
     def testFrame1_destroyChildren(self):
         """
