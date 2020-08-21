@@ -58,6 +58,35 @@ class DbGenre(DB):
             except:
                 return
     
+    def findGenreWithId(self, id):
+        '''
+        to find a specific genre in DB
+        params :
+        -info : ('genreName',)
+        return :
+        -[('nameGenre',),] 
+        -[]
+        -void 
+        '''
+        req = 'SELECT genre.nomGenre FROM genre WHERE genre.idGenre = %s'
+        try :
+            self.connectionDB()
+            self.cursor.execute(req, id)
+            data = self.cursor.fetchone()
+        except :
+            print('Fail to find Genre') 
+        finally:
+            try:
+                if self.connection.is_connected():
+                    self.connection.close()
+                    if data is None :
+                        return []
+                    else :
+                        return data[0]
+            except:
+                return
+
+
     def addNewGenre(self, info):
         '''
         to add a genre in DB

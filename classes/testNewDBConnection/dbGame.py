@@ -171,9 +171,26 @@ class DbGame(DB):
         try:
             self.connectionDB()
             self.cursor.execute(req, info)
-            self.connection.commit
+            self.connection.commit()
         except:
             print('Fail to delete games')
         finally: 
             if self.connection.is_connected():
+                self.connection.close()
+
+    def delOneGame(self, name):
+        '''
+        to delete a game
+        params : 
+        info = (gameName,)
+        '''
+        req = 'DELETE FROM jeu WHERE jeu.Nom = %s'
+        try :
+            self.connectionDB()
+            self.cursor.execute(req, name)
+            self.connection.commit()
+        except : 
+            print('fail to delete the game')
+        finally : 
+            if self.connection.is_connected() :
                 self.connection.close()

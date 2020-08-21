@@ -56,6 +56,32 @@ class DbConsole(DB):
             except:
                 return
                 
+    def findConsoleWithId(self, id):
+        '''
+        to find one console in the DB with the id
+        param :
+        -info : tuple ('id',)
+        return :
+        -if counsole found : (consoleName',)
+        '''
+        req = 'SELECT console.Nom FROM console WHERE console.idConsole = %s'
+        try :
+            self.connectionDB()
+            self.cursor.execute(req, id)
+            data = self.cursor.fetchone()
+        except :
+            print('Fail to find Console') 
+        finally:
+            try:
+                if self.connection.is_connected():
+                    self.connection.close()
+                    if data is None :
+                        return []
+                    else :
+                        return data[0]
+            except:
+                return
+
     def addNewConsole(self, info):
         '''
         To add console in DB

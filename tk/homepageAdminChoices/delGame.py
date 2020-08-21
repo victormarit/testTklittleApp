@@ -2,7 +2,7 @@ import tkinter
 from tkinter import messagebox
 from tkinter import ttk
 
-from classes.testNewDBConnection.dbGame import DbGame 
+from classes.testNewDBConnection.dbGame import DbGame
 from tk.homepageAdminChoices.addGame import AddGame
 
 class DelGame:
@@ -14,7 +14,7 @@ class DelGame:
         self.secondFrame = tkinter.Frame(self.frameApp)
         self.secondFrame.pack(side = 'top', fill='both', expand= 1 )
         #
-        self.label = tkinter.Label(self.secondFrame, text = 'Ajouter un jeu :')
+        self.label = tkinter.Label(self.secondFrame, text = 'Supprimer un jeu :')
         self.label.pack()
         self.void = tkinter.Label(self.secondFrame, text = '')
         self.void.pack()
@@ -35,19 +35,11 @@ class DelGame:
         test = DbGame()
         self.data = test.getGameSearch(self.entryGame.get())
         if len(self.data) == 0 :
-            test = messagebox.askyesno('Ajouter Jeu', 'Pas de jeux correspondant, voulez vous l\'ajouter ?')
-            if test == True : 
-                self.newGame()
+            test = messagebox.showerror('Aucun résultat', 'Aucun jeu correspondant à votre demande')
         elif len(self.data) > 0:
             self.listGame(self.data)
         else:
             messagebox.showerror('Erreur', 'Connexion à la base de données perdue')
-    
-    def newGame(self):
-        test = self.frame.winfo_children()
-        for i in test : 
-            i.destroy()
-        AddGame(self.frame)
     
     def listGame(self, games):
         void = tkinter.Label(self.thridFrame, text = '')
@@ -61,9 +53,23 @@ class DelGame:
         self.listbox.grid(row = 4, column = 0, columnspan = 2)
         scrollbar.grid(row = 4, column = 3, sticky = 'ns')
         scrollbar.config( command = self.listbox.yview )
-        nb = tkinter.Label(self.thridFrame, text = '\nQuantité : ')
-        nb.grid(row = 5, column = 0, sticky = 'e')
-        self.nbEntry = tkinter.Entry(self.thridFrame)
-        self.nbEntry.grid(row = 5, column = 1, sticky = 'ws')
-        addButton = tkinter.Button(self.thridFrame, width = 15, text = 'Modifier')
-        addButton.grid(row = 6, column = 0, columnspan = 2, pady = 10)
+        addButton = tkinter.Button(self.thridFrame, width = 15, text = 'Supprimer', command = self.delTheGame)
+        addButton.grid(row = 5, column = 0, columnspan = 2, pady = 10)
+        returnButton = tkinter.Button(self.thridFrame, width = 15, text = 'Annuler', command = self.returnMenu)
+        returnButton.grid(row = 6, column = 0, columnspan = 2)
+
+    def delTheGame(self):
+        try :
+            name = self.listbox.get(self.listbox.curselection())
+            test = messagebox.askokcancel("Supprimer", "Êtes-vous sûr de vouloir supprimer ce jeu ?")
+            if test:
+                database = DbGame()
+                database.delOneGame((name,))
+                self.returnMenu()
+        except: 
+            messagebox.showerror("Erreur", "Veuillez sélectionner un jeu")
+    
+    def returnMenu(self):
+        self.frameApp.destroy()
+        AddGame(self.frame)
+

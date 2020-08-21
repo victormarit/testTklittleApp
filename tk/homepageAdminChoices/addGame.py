@@ -40,8 +40,12 @@ class AddGame:
         self.genreBox.grid(row = 5, column = 1)
         self.buttonAddGame = tkinter.Button(self.secondFrame, text = "Ajouter", width = 10, command = self.testValues)
         self.buttonAddGame.grid(row=6, column = 0, columnspan = 2, pady = 5)
-        self.buttonReturn = tkinter.Button(self.secondFrame, text = 'Annuler', width = 10)
+        self.buttonReturn = tkinter.Button(self.secondFrame, text = 'Annuler', width = 10, command = self.cancel)
         self.buttonReturn.grid(row=7, column = 0, columnspan = 2)
+
+    def cancel(self):
+        self.secondFrame.destroy()
+        AddGame(self.frame)
 
     def getConsoles(self):
         database = DbConsole()
@@ -74,6 +78,7 @@ class AddGame:
         game = (self.nameEntry.get(), console, int(self.pegiEntry.get()), genre)
         database = DbGame()
         database.addGameInDB(game)
+        self.cancel()
 
     def getConsoleId(self):
         database = DbConsole()
