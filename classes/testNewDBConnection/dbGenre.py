@@ -86,7 +86,6 @@ class DbGenre(DB):
             except:
                 return
 
-
     def addNewGenre(self, info):
         '''
         to add a genre in DB

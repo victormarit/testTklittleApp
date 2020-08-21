@@ -85,6 +85,11 @@ class AlterGame:
         self.getGameInformation()
         self.getGenre()
         self.getConsole()
+        #global 
+        global nameEntry
+        global consoleEntry
+        global pegiEntry
+        global genreBox
         #tkinter inferface
         frameApp = tkinter.Frame(self.frame)
         frameApp.pack()
@@ -118,7 +123,7 @@ class AlterGame:
                 if self.genre == self.listGenres[i] : 
                     genreBox.current(i)
         genreBox.grid(row = 5, column = 1)
-        buttonAddGame = tkinter.Button(frameApp, text = "Modifier", width = 10)
+        buttonAddGame = tkinter.Button(frameApp, text = "Modifier", width = 10, command = self.validateModification)
         buttonAddGame.grid(row=6, column = 0, columnspan = 2, pady = 5)
         buttonReturn = tkinter.Button(frameApp, text = 'Annuler', width = 10, command = self.cancel2)
         buttonReturn.grid(row=7, column = 0, columnspan = 2)
@@ -152,3 +157,31 @@ class AlterGame:
         for i in widget :
             i.destroy()
         AlterGame(self.frame)
+    
+    def validateModification(self):
+        informations = self.testAndGetValue()
+        test = messagebox.askokcancel('Valider', 'Voulez vous sauvegarder les modifications')
+        if test : 
+            db = DbGame()
+            db.updateGame(informations)
+            messagebox.showinfo('Modification', 'Modification enregistrée !')
+            self.cancel2()
+    
+    def testAndGetValue(self) :
+        if nameEntry.get() != '' and  pegiEntry.get() != '' :
+            idGenre = self.getIdGenre()
+            idConsole = self.getIdConsole()
+            return (nameEntry.get(), pegiEntry.get(), idGenre, idConsole, self.id)
+        else : 
+            messagebox.showinfo('Erreur', 'Veuillez remplir tous les champs obligatoires')
+
+    def getIdConsole(self):
+        database = DbConsole()
+        nom = (consoleEntry.get(),)
+        return database.findOneConsole(nom)[0]
+    
+    def getIdGenre(self):
+        database = DbGenre()
+        nom = (genreBox.get(),)
+        return database.findOneGenre(nom)[0]
+        

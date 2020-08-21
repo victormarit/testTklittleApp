@@ -194,3 +194,20 @@ class DbGame(DB):
         finally : 
             if self.connection.is_connected() :
                 self.connection.close()
+
+    def updateGame(self, info):
+        '''
+        to update game informations 
+        params :  
+        info = (gameName, gamePegi, gameIdGenre, gameIdConsole, gameId)
+        '''
+        req = 'UPDATE jeu SET jeu.Nom = %s, jeu.pegi = %s, jeu.idGenre = %s, jeu.idConsole = %s WHERE jeu.idJeu = %s'
+        try :
+            self.connectionDB()
+            self.cursor.execute(req, info)
+            self.connection.commit()
+        except :
+            print('Fail to update console') 
+        finally:
+            if self.connection.is_connected():
+                self.connection.close()
