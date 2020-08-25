@@ -52,6 +52,7 @@ CREATE TABLE gameCollection(
    idUser INT,
    idJeu INT,
    nb INT,
+   Etat boolean DEFAULT False,
    PRIMARY KEY(idUser, idJeu),
    FOREIGN KEY(idUser) REFERENCES user(idUser),
    FOREIGN KEY(idJeu) REFERENCES jeu(idJeu)

@@ -178,6 +178,41 @@ class DbGame(DB):
             if self.connection.is_connected():
                 self.connection.close()
 
+    def updateOneGameInCollection(self, info):
+        '''
+        to update one game in user collection
+        params : 
+        info = ( nb, boolean, userId, gameId, )
+        '''
+        req = 'UPDATE gamecollection SET gamecollection.nb = %s, gamecollection.Etat = %s WHERE gamecollection.idUser = %s AND gamecollection.idJeu = %s'
+        try :
+            self.connectionDB()
+            self.cursor.execute(req, info)
+            self.connection.commit()
+        except :
+            print('Fail to update gamecollection') 
+        finally:
+            if self.connection.is_connected():
+                self.connection.close()
+
+    
+    def delOneGameInCollection(self, info):
+        '''
+        to delete one game on user collection
+        params : 
+        info = (userId, gameId)
+        '''
+        req = 'DELETE FROM gamecollection WHERE gamecollection.idUser = %s AND gamecollection.idJeu = %s'
+        try:
+            self.connectionDB()
+            self.cursor.execute(req, info)
+            self.connection.commit()
+        except:
+            print('Fail to delete games')
+        finally: 
+            if self.connection.is_connected():
+                self.connection.close()
+
     def delOneGame(self, name):
         '''
         to delete a game
@@ -211,3 +246,26 @@ class DbGame(DB):
         finally:
             if self.connection.is_connected():
                 self.connection.close()
+    
+    def getUserCollectionGame(self, id):
+        '''
+        to get game collection informations
+        params :
+        -id = (userId)
+        return : 
+        (gameName, number, state)
+        '''
+        req = 'SELECT jeu.Nom, gamecollection.nb, gamecollection.Etat FROM jeu, gamecollection WHERE jeu.idJeu = gamecollection.idJeu and gamecollection.idUser = %s'
+        try:
+            self.connectionDB()
+            self.cursor.execute(req, id)
+            data = self.cursor.fetchall()
+        except:
+            print('Fail to get game collection')
+        finally: 
+            if self.connection.is_connected():
+                self.connection.close()
+                if len(data) > 0 :
+                    return data
+                else: 
+                    return []
