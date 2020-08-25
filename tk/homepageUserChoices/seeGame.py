@@ -87,6 +87,7 @@ class SeeGame:
             if test:
                 curItem = treeview.focus()
                 name = (treeview.item(curItem)['text'],)
+                number = treeview.item(curItem)['values'][0]
                 widgets = self.frameApp.winfo_children()
                 for widget in widgets:
                     widget.destroy()
@@ -97,6 +98,7 @@ class SeeGame:
                 quantity = tkinter.Label(self.frameApp, text ='Quantité possédé :')
                 quantity.grid(row = 2, column = 0 )
                 quantityEntry = tkinter.Entry(self.frameApp)
+                quantityEntry.insert(1, number)
                 quantityEntry.grid(row = 2, column = 1)
                 radio1 = tkinter.Radiobutton(self.frameApp, variable= var ,text = 'A faire', value = 0)
                 radio1.grid(row = 3, column = 0, columnspan = 2)
